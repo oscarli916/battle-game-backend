@@ -4,6 +4,7 @@ import (
 	"errors"
 	"log"
 	"net/http"
+	"os"
 	"sync"
 
 	"github.com/gorilla/websocket"
@@ -190,7 +191,10 @@ func WebSocketHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	PORT := "8080"
+	PORT := os.Getenv("PORT")
+	if PORT == "" {
+		log.Fatal("PORT env variable not set")
+	}
 
 	RoomStore.Init()
 
